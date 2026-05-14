@@ -1,7 +1,9 @@
 require("dotenv").config()
 const express = require("express")
+const cors = require("cors")
 const app = express()
 
+app.use(cors({ origin: 'http://localhost:3000' }))
 app.use(express.json())
 
 const port = process.env.LOGIN_PORT || 4000
@@ -23,7 +25,9 @@ app.post("/api/auth/login", (req, res) => {
         console.log("Usuario:", usuario)
         console.log("Password desencriptada:", plainPassword)
 
-        return res.json({ success: true, usuario })
+        const token = Buffer.from(`${usuario}:${Date.now()}`).toString('base64')
+        res.setHeader('token', token)
+        return res.json({ success: true })
     } catch (error) {
         console.error("Error al desencriptar password:", error)
         return res.status(400).json({ error: "Password inválida" })
