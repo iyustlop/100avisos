@@ -9,15 +9,15 @@ const RegistrationService = require("./registrationService")
 const RegistrationController = require("./registrationController")
 
 const config = new Config()
-const authService = new AuthService(config.decodeSecret)
+const authService = new AuthService(config.decodeSecret, config.jwtSecret)
 const userRepository = new UserRepository()
 const registrationService = new RegistrationService(authService, userRepository)
-const loginController = new LoginController(authService)
+const loginController = new LoginController(authService, userRepository)
 const registrationController = new RegistrationController(registrationService)
 
 const app = express()
 
-app.use(cors({ origin: config.allowedOrigin }))
+app.use(cors({ origin: config.allowedOrigin, exposedHeaders: ['token'] }))
 app.use(express.json())
 app.post("/api/auth/login", (req, res) => loginController.postLogin(req, res))
 app.post("/api/auth/new", (req, res) => registrationController.postNewUser(req, res))
