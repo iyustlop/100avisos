@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AdsList from './components/AdsList';
 import AdForm from './components/AdForm';
+import Home from './components/Home';
 import NavButtons from './components/NavButtons';
 import LoginForm from './components/LoginForm';
 import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
-const App: React.FC = () => {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setToken(localStorage.getItem('token'))
-  }, []);
+const AppContent: React.FC = () => {
+  const { token } = useAuth();
 
   return (
     <Router>
@@ -26,16 +24,23 @@ const App: React.FC = () => {
       </AppBar>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: 4 }}>
         {!token ? (
-          <LoginForm onLoginSuccess={() => setToken(localStorage.getItem('token'))} />
+          <LoginForm />
         ) : (
           <Routes>
-            <Route path="/" element={<AdsList />} />
+            <Route path="/" element={<Home />} />
             <Route path="/create" element={<AdForm />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         )}
       </Box>
     </Router>
   );
 };
+
+const App: React.FC = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
 
 export default App;

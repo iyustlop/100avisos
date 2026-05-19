@@ -17,7 +17,8 @@ export const authService = {
       throw new Error('Login failed');
     }
 
-    const token = response.headers.get('token');
+    const responseData = await response.json();
+    const token = response.headers.get('token') || responseData.token;
     if (token) {
       localStorage.setItem('token', token);
     } else {

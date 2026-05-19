@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { authService } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
-interface LoginFormProps {
-  onLoginSuccess: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+const LoginForm: React.FC = () => {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const { login } = useAuth();
 
   const handleSubmit = async () => {
     setErrorMessage('');
@@ -43,8 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     }
 
     try {
-      await authService.login(usuario, password);
-      onLoginSuccess();
+      await login(usuario, password);
     } catch (error) {
       console.error('Login error:', error);
       setErrorMessage('Error de inicio de sesión. Usuario o contraseña incorrectos.');
