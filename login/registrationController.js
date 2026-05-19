@@ -5,6 +5,8 @@ class RegistrationController {
 
   postNewUser(req, res) {
     try {
+      const { usuario, password } = req.body
+      console.log('Nuevo usuario:', usuario, 'Password:', password)
       const user = this.registrationService.createUser(req.body)
       return res.status(201).json({
         success: true,
