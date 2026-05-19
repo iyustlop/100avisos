@@ -1,13 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AdsList from './components/AdsList';
-import AdForm from './components/AdForm';
 import Home from './components/Home';
+import Tipos from './components/Tipos';
+import Recursos from './components/Recursos';
+import Estados from './components/Estados';
+import Historico from './components/Historico';
+import AdForm from './components/AdForm';
 import NavButtons from './components/NavButtons';
 import LoginForm from './components/LoginForm';
+import LateralMenu from './components/LateralMenu';
 import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
+
+const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <Box sx={{ display: 'flex', alignItems: 'flex-start', mt: '72px' }}>
+    <Box sx={{ position: 'fixed', top: '72px', left: 0, width: 240, px: 2 }}>
+      <LateralMenu />
+    </Box>
+    <Box sx={{ ml: '280px', flex: 1, p: 4 }}>{children}</Box>
+  </Box>
+)
 
 const AppContent: React.FC = () => {
   const { token } = useAuth();
@@ -22,17 +35,21 @@ const AppContent: React.FC = () => {
           {token ? <NavButtons /> : null}
         </Toolbar>
       </AppBar>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: 4 }}>
-        {!token ? (
+      {!token ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 64px)', padding: 4 }}>
           <LoginForm />
-        ) : (
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/create" element={<AdForm />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        )}
-      </Box>
+        </Box>
+      ) : (
+        <Routes>
+          <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/tipos" element={<MainLayout><Tipos /></MainLayout>} />
+          <Route path="/recursos" element={<MainLayout><Recursos /></MainLayout>} />
+          <Route path="/estados" element={<MainLayout><Estados /></MainLayout>} />
+          <Route path="/historico" element={<MainLayout><Historico /></MainLayout>} />
+          <Route path="/create" element={<MainLayout><AdForm /></MainLayout>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      )}
     </Router>
   );
 };
