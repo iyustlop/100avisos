@@ -1,7 +1,8 @@
-import React from 'react'
-import { Typography, Box } from '@mui/material'
+import { memo } from 'react'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-const Estados: React.FC = () => (
+const Estados = memo(() => (
   <Box>
     <Typography variant="h4" gutterBottom>
       Estados
@@ -10,6 +11,6 @@ const Estados: React.FC = () => (
       Esta es la sección de Estados. Aquí puedes revisar el estado actual de los avisos.
     </Typography>
   </Box>
-)
+))
 
 export default Estados

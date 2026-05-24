@@ -1,7 +1,8 @@
-import React from 'react'
-import { Typography, Box } from '@mui/material'
+import { memo } from 'react'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-const Historico: React.FC = () => (
+const Historico = memo(() => (
   <Box>
     <Typography variant="h4" gutterBottom>
       Histórico
@@ -10,6 +11,6 @@ const Historico: React.FC = () => (
       Esta es la sección de Histórico. Aquí puedes revisar los cambios anteriores.
     </Typography>
   </Box>
-)
+))
 
 export default Historico

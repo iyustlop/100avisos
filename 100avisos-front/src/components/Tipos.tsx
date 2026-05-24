@@ -1,7 +1,8 @@
-import React from 'react'
-import { Typography, Box } from '@mui/material'
+import { memo } from 'react'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-const Tipos: React.FC = () => (
+const Tipos = memo(() => (
   <Box>
     <Typography variant="h4" gutterBottom>
       Tipos
@@ -10,6 +11,6 @@ const Tipos: React.FC = () => (
       Esta es la sección de Tipos. Aquí puedes gestionar y ver los tipos disponibles.
     </Typography>
   </Box>
-)
+))
 
 export default Tipos

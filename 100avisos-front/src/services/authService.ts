@@ -21,6 +21,7 @@ export const authService = {
     const token = response.headers.get('token') || responseData.token;
     if (token) {
       localStorage.setItem('token', token);
+      localStorage.setItem('user', usuario);
     } else {
       throw new Error('No token received');
     }
