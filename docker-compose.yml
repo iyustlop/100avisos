@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+  login:
+    build: ./login
+    container_name: login
+    environment:
+      - LOGIN_PORT=4000
+      - LOGIN_DECODE_SECRET=your_secret_here
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('net').createConnection(4000).on('error',()=>process.exit(1)).on('connect',()=>process.exit(0))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ads:
+    build: ./100avisos-ads
+    container_name: 100avisos-ads
+    environment:
+      - PORT=3001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/ads"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  front:
+    build: ./100avisos-front
+    container_name: 100avisos-front
+    depends_on:
+      login:
+        condition: service_healthy
+      ads:
+        condition: service_healthy
+    environment:
+      - PORT=3000
+    command: ["npm", "run", "preview", "--", "--port", "3000", "--strictPort"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build: ./nginx
+    container_name: 100avisos-nginx
+    depends_on:
+      front:
+        condition: service_healthy
+    ports:
+      - "80:80"
+
+networks:
+  default:
+    name: 100avisos-net
