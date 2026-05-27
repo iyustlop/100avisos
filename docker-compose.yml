@@ -5,6 +5,8 @@ services:
     environment:
       - LOGIN_PORT=4000
       - LOGIN_DECODE_SECRET=your_secret_here
+    ports:
+      - "4000:4000"
     healthcheck:
       test: ["CMD", "node", "-e", "require('net').createConnection(4000).on('error',()=>process.exit(1)).on('connect',()=>process.exit(0))"]
       interval: 10s
@@ -14,6 +16,8 @@ services:
   ads:
     build: ./100avisos-ads
     container_name: 100avisos-ads
+    ports:
+      - "3001:3001"
     environment:
       - PORT=3001
     healthcheck:
