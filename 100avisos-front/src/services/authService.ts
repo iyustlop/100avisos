@@ -1,8 +1,8 @@
-const API_BASE_URL = 'http://localhost:4000';
+const API_BASE_URL = '/api';
 
 export const authService = {
   async login(usuario: string, password: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const authService = {
   },
 
   async register(usuario: string, password: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/api/auth/new`, {
+    const response = await fetch(`${API_BASE_URL}/auth/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

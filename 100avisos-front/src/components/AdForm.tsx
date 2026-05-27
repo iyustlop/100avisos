@@ -19,7 +19,7 @@ const AdForm = () => {
     setLoading(true);
     setErrorMessage('');
     try {
-      await axios.post('http://localhost:3001/api/ads', { title, description });
+      await axios.post('/api/ads', { title, description });
       setSnackbarOpen(true);
       setTitle('');
       setDescription('');

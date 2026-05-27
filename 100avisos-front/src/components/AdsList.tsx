@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 
-const API_URL = 'http://localhost:3001/api/ads';
+const API_URL = '/api/ads';
 
 const fetcher = async (url: string): Promise<Ad[]> => {
   const res = await fetch(url);
