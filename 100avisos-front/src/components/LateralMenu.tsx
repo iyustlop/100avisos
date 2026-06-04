@@ -42,8 +42,8 @@ const HistoryIcon = (
 
 const menuItems = [
   { label: 'Home', path: '/', icon: HomeIcon },
-  { label: 'Tipos', path: '/tipos', icon: TypesIcon },
-  { label: 'Recursos', path: '/recursos', icon: ResourcesIcon },
+  { label: 'Trayectos', path: '/tipos', icon: TypesIcon },
+  { label: 'Conductores', path: '/recursos', icon: ResourcesIcon },
   { label: 'Estados', path: '/estados', icon: StatesIcon },
   { label: 'Histórico', path: '/historico', icon: HistoryIcon },
 ] as const;
