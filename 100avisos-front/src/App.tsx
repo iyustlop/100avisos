@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
-const Tipos = lazy(() => import('./components/Tipos'));
+const Trayectos = lazy(() => import('./components/Trayectos'));
 const Recursos = lazy(() => import('./components/Recursos'));
 const Estados = lazy(() => import('./components/Estados'));
 const Historico = lazy(() => import('./components/Historico'));
@@ -49,7 +49,7 @@ const AppContent = () => {
         <Suspense fallback={<Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}><CircularProgress /></Box>}>
           <Routes>
             <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-            <Route path="/tipos" element={<MainLayout><Tipos /></MainLayout>} />
+            <Route path="/trayectos" element={<MainLayout><Trayectos /></MainLayout>} />
             <Route path="/recursos" element={<MainLayout><Recursos /></MainLayout>} />
             <Route path="/estados" element={<MainLayout><Estados /></MainLayout>} />
             <Route path="/historico" element={<MainLayout><Historico /></MainLayout>} />

@@ -42,7 +42,7 @@ const HistoryIcon = (
 
 const menuItems = [
   { label: 'Home', path: '/', icon: HomeIcon },
-  { label: 'Trayectos', path: '/tipos', icon: TypesIcon },
+  { label: 'Trayectos', path: '/trayectos', icon: TypesIcon },
   { label: 'Conductores', path: '/recursos', icon: ResourcesIcon },
   { label: 'Estados', path: '/estados', icon: StatesIcon },
   { label: 'Histórico', path: '/historico', icon: HistoryIcon },

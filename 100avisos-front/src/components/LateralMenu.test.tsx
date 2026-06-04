@@ -15,7 +15,7 @@ describe('LateralMenu', () => {
 
     const menuItems = [
       { label: 'Home', path: '/' },
-      { label: 'Trayectos', path: '/tipos' },
+      { label: 'Trayectos', path: '/trayectos' },
       { label: 'Conductores', path: '/recursos' },
       { label: 'Estados', path: '/estados' },
       { label: 'Histórico', path: '/historico' },
