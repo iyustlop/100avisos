@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { describe, it, expect } from 'vitest';
 import App from './App';
 
-test('renders app with navigation', () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-  const linkElement = screen.getByText(/100 Avisos/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+  it('renders app title', () => {
+    render(<App />);
+    const linkElement = screen.getByText(/100 Avisos/i);
+    expect(linkElement).toBeInTheDocument();
+  });
 });

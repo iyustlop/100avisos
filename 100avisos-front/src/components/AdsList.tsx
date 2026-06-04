@@ -1,36 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Ad } from '../types';
-import { List, ListItem, ListItemText, Button, Container, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
+import type { Ad } from '../types';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
 
-const AdsList: React.FC = () => {
-  const [ads, setAds] = useState<Ad[]>([]);
+const API_URL = '/api/ads';
 
-  useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        const response = await axios.get<Ad[]>('http://localhost:3001/api/ads');
-        setAds(response.data);
-      } catch (error) {
-        console.error('Error fetching ads:', error);
-      }
-    };
-    fetchAds();
-  }, []);
+const fetcher = async (url: string): Promise<Ad[]> => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('No se pudieron cargar los avisos.');
+  return res.json();
+};
+
+const AdsList = () => {
+  const navigate = useNavigate();
+  const { data: ads, error, isLoading } = useSWR(API_URL, fetcher);
 
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
         Avisos
       </Typography>
-      <List>
-        {ads.map((ad) => (
-          <ListItem key={ad.id}>
-            <ListItemText primary={ad.title} secondary={ad.description} />
-          </ListItem>
-        ))}
-      </List>
-      <Button variant="contained" color="primary">
+
+      {isLoading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+          <CircularProgress />
+        </Box>
+      )}
+
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>{error.message}</Alert>
+      )}
+
+      {!isLoading && !error && ads && ads.length === 0 && (
+        <Typography variant="body1" sx={{ py: 4, textAlign: 'center' }}>
+          No hay avisos disponibles.
+        </Typography>
+      )}
+
+      {!isLoading && !error && ads && ads.length > 0 && (
+        <List>
+          {ads.map((ad) => (
+            <ListItem key={ad.id}>
+              <ListItemText primary={ad.title} secondary={ad.description} />
+            </ListItem>
+          ))}
+        </List>
+      )}
+
+      <Button variant="contained" color="primary" onClick={() => navigate('/create')}>
         Crear Nuevo Aviso
       </Button>
     </Container>

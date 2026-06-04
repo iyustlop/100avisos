@@ -1,8 +1,9 @@
-import React from 'react'
-import { Container, Typography, Box } from '@mui/material'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import AdsList from './AdsList'
 
-const Home: React.FC = () => (
+const Home = () => (
   <Container>
     <Box sx={{ mb: 4, textAlign: 'center' }}>
       <Typography variant="h4" component="h1" gutterBottom>
